@@ -60,7 +60,7 @@ class ReservationResource extends Resource
                     ]),
             ])
             ->filters([
-                Tables\Filters\Filter::make('service_date_and_time')
+                Tables\Filters\Filter::make('reservation_date')
                     ->form([
                         DatePicker::make('created_from')->label('Tarixdən'),
                         DatePicker::make('created_until')->label('Tarixə'),
@@ -69,11 +69,11 @@ class ReservationResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('service_date_and_time', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('reservation_date', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('service_date_and_time', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('reservation_date', '<=', $date),
                             );
                     }),
             ])
