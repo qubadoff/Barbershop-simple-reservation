@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Models\Reservation;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -58,7 +60,22 @@ class ReservationResource extends Resource
                     ]),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('service_date_and_time')
+                    ->form([
+                        DatePicker::make('created_from')->label('Tarixdən'),
+                        DatePicker::make('created_until')->label('Tarixə'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('service_date_and_time', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('service_date_and_time', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
