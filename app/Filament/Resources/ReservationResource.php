@@ -48,8 +48,14 @@ class ReservationResource extends Resource
                 Tables\Columns\TextColumn::make('customer_phone')->label('Müştəri nömrəsi'),
                 Tables\Columns\TextColumn::make('reservation_date')->label('Rezervasiya tarixi')->date(),
                 Tables\Columns\TextColumn::make('barber.name')->label('Bərbərin adı'),
-                Tables\Columns\TextColumn::make('total_price')->label('Cəmi məbləğ')->money('AZN'),
-                Tables\Columns\TextColumn::make('service_charge')->label('Çayavoy')->money('AZN'),
+                Tables\Columns\TextColumn::make('total_price')->label('Cəmi məbləğ')->money('AZN')
+                    ->summarize([
+                        Tables\Columns\Summarizers\Sum::make()->money('AZN'),
+                    ]),
+                Tables\Columns\TextColumn::make('service_charge')->label('Çayavoy')->money('AZN')
+                    ->summarize([
+                        Tables\Columns\Summarizers\Sum::make()->money('AZN'),
+                    ]),
             ])
             ->filters([
                 //
