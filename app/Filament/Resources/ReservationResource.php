@@ -44,7 +44,7 @@ class ReservationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('customer_name')->label('Müştəri adı'),
+                Tables\Columns\TextColumn::make('customer_name')->label('Müştəri adı')->searchable(),
                 Tables\Columns\TextColumn::make('customer_phone')->label('Müştəri nömrəsi'),
                 Tables\Columns\TextColumn::make('reservation_date')->label('Rezervasiya tarixi')->date(),
                 Tables\Columns\TextColumn::make('barber.name')->label('Bərbərin adı'),
